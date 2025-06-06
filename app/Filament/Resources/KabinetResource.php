@@ -10,9 +10,13 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\PengurusInti;
 use Filament\Resources\Resource;
+use App\Models\PenempatanJabatan;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use App\Models\KabinetMahasiswaJabatan;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,14 +26,24 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\KabinetResource\RelationManagers;
 use App\Filament\Resources\KabinetResource\RelationManagers\JabatanRelationManager;
 use App\Filament\Resources\KabinetResource\RelationManagers\PengurusIntiRelationManager;
-use App\Models\PenempatanJabatan;
-use Filament\Forms\Components\Section;
+use App\Filament\Resources\KabinetResource\RelationManagers\MahasiswaKabinetJabatanRelationManager;
 
 class KabinetResource extends Resource
 {
     protected static ?string $model = Kabinet::class;
+    protected static ?int $navigationSort = 2;
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['nama_kabinet', 'periode'];
+    }
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Nama Kabinet' => $record->nama_kabinet,
+            'Periode' => $record->periode,
+        ];
+    }
     protected static ?string $navigationGroup = 'Kelola Pengurus';
     protected static ?string $navigationLabel = 'Kabinet & Pengurus';
 
@@ -85,16 +99,12 @@ class KabinetResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama_kabinet')
-                    ->badge()->color('success')
                     ->searchable(),
-                TextColumn::make('penempatanJabatan')
-                    ->label('Jabatan Ketua')
-                    ->formatStateUsing(
-                        fn($state, $record) =>
-                        $record->penempatanJabatan
-                            ->firstWhere('jabatan.nama_jabatan', 'Ketua')?->mahasiswa->nama ?? '-'
-                    ),
                 Tables\Columns\TextColumn::make('periode')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('ketua.mahasiswa.nama')
+                    ->label('Ketua')
+                    ->formatStateUsing(fn($state) => $state ?? 'Belum ada ketua')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Logo')
@@ -121,7 +131,9 @@ class KabinetResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            MahasiswaKabinetJabatanRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

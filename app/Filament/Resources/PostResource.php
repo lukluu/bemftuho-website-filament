@@ -38,8 +38,18 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
     protected static ?string $navigationGroup = 'Post Management';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $recordTitleAttribute = 'title';
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'created_at'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Title' => $record->title,
+            'Dibuat' => $record->created_at->diffForHumans(),
+        ];
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -49,6 +59,7 @@ class PostResource extends Resource
                         ->relationship('category', 'name')
                         ->required(),
                     TextInput::make('title')
+                        ->unique(ignoreRecord: true)
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->unique(ignoreRecord: true)->disabled()->dehydrated(),
@@ -78,14 +89,15 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('title')->sortable()->searchable()
+                    ->description(fn(Post $record) => Str::limit(strip_tags($record->content), 50)),
                 TextColumn::make('category.name')->sortable()->searchable(),
                 TextColumn::make('tags.name')->searchable()->label('Tags')->badge(),
                 TextColumn::make('is_published')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(bool $state): string => $state ? 'Published' : 'Draft')
-                    ->color(fn(bool $state): string => $state ? 'success' : 'danger'),
+                    ->color(fn(bool $state): string => $state ? 'success' : 'warning'),
                 SpatieMediaLibraryImageColumn::make('post_image')->collection('posts')->label('Image')->openUrlInNewTab()->size(50),
             ])
             ->filters([

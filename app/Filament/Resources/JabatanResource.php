@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\JabatanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -21,9 +22,18 @@ class JabatanResource extends Resource
     protected static ?string $model = Jabatan::class;
 
     protected static ?string $navigationGroup = 'Kelola Pengurus';
+    protected static ?int $navigationSort = 3;
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['nama_jabatan'];
+    }
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Nama Jabatan' => $record->nama_jabatan,
+        ];
+    }
     public static function form(Form $form): Form
     {
         return $form

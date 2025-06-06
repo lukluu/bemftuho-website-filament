@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories', 'id')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('title');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->text('content');
             $table->boolean('is_published')->default(false);
             $table->timestamps();

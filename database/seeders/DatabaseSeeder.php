@@ -5,9 +5,13 @@ namespace Database\Seeders;
 use App\Models\Tag;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Jabatan;
-use App\Models\Category;
 use App\Models\Kabinet;
+use App\Models\Category;
+use App\Models\Kelembagaan;
+use App\Models\Marchandise;
+use App\Models\Pengumuman;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,6 +24,9 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         \App\Models\Mahasiswa::factory()->count(15)->create();
+        Pengumuman::factory()->count(5)->create();
+        Marchandise::factory()->count(5)->create();
+        Kelembagaan::factory()->count(5)->create();
         User::create([
             'name' => 'Admin',
             'username' => 'lukman',
@@ -51,6 +58,7 @@ class DatabaseSeeder extends Seeder
         Kabinet::create([
             'nama_kabinet' => 'Kabinet 1',
             'periode' => '2023/2024',
+            'logo' => 'default/no_image.png',
             'visi' => 'Visi Kabinet 1',
             'misi' => 'Misi Kabinet 1',
             'tagline' => 'Tagline Kabinet 1',
@@ -59,9 +67,13 @@ class DatabaseSeeder extends Seeder
             'nama_kabinet' => 'Kabinet 2',
             'periode' => '2023/2024',
             'visi' => 'Visi Kabinet 2',
+            'logo' => 'default/no_image.png',
             'misi' => 'Misi Kabinet 2',
             'tagline' => 'Tagline Kabinet 2',
 
+        ]);
+        $this->call([
+            EventSeeder::class,
         ]);
     }
 }

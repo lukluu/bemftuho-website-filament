@@ -25,7 +25,10 @@ use Filament\Resources\RelationManagers\RelationManager;
 class MahasiswaKabinetJabatanRelationManager extends RelationManager
 {
     protected static string $relationship = 'kabinetMahasiswaJabatan';
-    protected static ?string $title = 'Kabinet & Jabatan';
+    public function getTableHeading(): string
+    {
+        return 'Daftar Jabatan Mahasiswa : ' . $this->ownerRecord->nama;
+    }
     protected static ?string $recordTitleAttribute = 'nama_kabinet';
 
     public function form(Form $form): Form
@@ -81,8 +84,6 @@ class MahasiswaKabinetJabatanRelationManager extends RelationManager
                             };
                         }
                     ])
-
-
             ]);
     }
 
@@ -101,7 +102,12 @@ class MahasiswaKabinetJabatanRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->label('Tambah Jabatan')
+                    ->outlined()
+                    ->color('warning')
+                    ->icon('heroicon-o-plus-circle')
+                    ->modalHeading('Tambah Jabatan untuk ' . $this->ownerRecord->nama),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

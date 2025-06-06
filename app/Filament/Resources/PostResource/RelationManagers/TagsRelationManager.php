@@ -28,7 +28,7 @@ class TagsRelationManager extends RelationManager
                     return "Posts Title :{$post->title}";
                 })->schema([
                     TextInput::make('name')
-                        ->live()
+                        ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->unique(ignoreRecord: true)->disabled()->dehydrated()
                 ])

@@ -145,11 +145,27 @@ class KabinetMahasiswaJabatanRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->label('Tambah Mahasiswa ')
+                    ->outlined()
+                    ->color('warning')
+                    ->icon('heroicon-o-plus-circle')
                     ->modalHeading('Tambah Jabatan untuk ' . $this->ownerRecord->nama_jabatan),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('detech')
+                    ->label('Detech')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->forceDelete();
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Relasi dihapus')
+                            ->body('Mahasiswa telah didelete dari jabatan & kabinet ini.')
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

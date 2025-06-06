@@ -35,8 +35,8 @@ class Post extends Model implements HasMedia
         parent::boot();
 
         static::saving(function ($post) {
-            $post->slug = Str::slug($post->name);
-            $post->name = Str::title($post->name);
+            $post->slug = Str::slug($post->title);
+            $post->title = Str::title($post->title);
         });
     }
 }

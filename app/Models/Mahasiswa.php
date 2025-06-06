@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Filament\Panel\Concerns\HasGlobalSearch;
+use App\Filament\Resources\MahasiswaResource;
+use Filament\GlobalSearch\GlobalSearchResult;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends model implements HasMedia
 {
-    use InteractsWithMedia, SoftDeletes, HasFactory;
+    use InteractsWithMedia, HasFactory, HasGlobalSearch;
 
     protected $table = 'mahasiswas';
     protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('mahasiswa')->singleFile()->useDisk('mahasiswa');
