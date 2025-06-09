@@ -23,6 +23,9 @@ use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Filament\Resources\CategoryResource\RelationManagers\PostsRelationManager;
+use Faker\Core\File;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ImageColumn;
 
 class CategoryResource extends Resource
 {
@@ -38,7 +41,13 @@ class CategoryResource extends Resource
                     TextInput::make('name')
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                    TextInput::make('slug')->unique(ignoreRecord: true)->disabled()->dehydrated()
+                    TextInput::make('slug')->unique(ignoreRecord: true)->disabled()->dehydrated(),
+                    FileUpload::make('image')
+                        ->image()
+                        ->disk('public')
+                        ->directory('categories')
+                        ->visibility('public')
+                        ->required(),
                 ])
             ]);
     }
@@ -52,6 +61,7 @@ class CategoryResource extends Resource
                 TextColumn::make('posts_count')
                     ->counts('posts') // Pastikan ini ada
                     ->label('Jumlah Post'),
+                ImageColumn::make('image')->circular()->label('Image'),
             ])
 
             ->filters([

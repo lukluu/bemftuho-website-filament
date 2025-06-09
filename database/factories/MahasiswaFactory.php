@@ -37,7 +37,7 @@ class MahasiswaFactory extends Factory
             'nama' => $this->faker->name($jenisKelamin[rand(0, 1)]),
             'nim' => $this->generateNIM(),
             'jurusan' => Arr::random($jurusan),
-            'angkatan' => (string) $this->faker->numberBetween(2018, 2023),
+            'angkatan' => (string) $this->faker->numberBetween(2018, 2025),
             'gander' => Arr::random($jenisKelamin), // Perhatikan typo, seharusnya 'gender'
         ];
     }

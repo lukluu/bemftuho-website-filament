@@ -1,6 +1,6 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand me-lg-5 me-0" href="index.html">
+                <a class="navbar-brand me-lg-5 me-0" href="{{url('/')}}">
                     <img src="{{asset('tema')}}/images/pod-talk-logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
                 </a>
                 <!-- 
@@ -23,11 +23,11 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Home</a>
+                            <a class="nav-link {{ Route::is('welcome') ? ' active' : '' }}" aria-current="page" href="{{ url('/') }}">Beranda</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('about') ? ' active' : '' }}" href="{{ url('/about') }}">Profile</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -39,10 +39,6 @@
 
                                 <li><a class="dropdown-item" href="detail-page.html">Detail Page</a></li>
                             </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                     </ul>
 

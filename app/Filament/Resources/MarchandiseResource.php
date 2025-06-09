@@ -22,7 +22,6 @@ class MarchandiseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'E-Commerce';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -30,7 +29,7 @@ class MarchandiseResource extends Resource
 
     protected static ?string $label = 'Marchandise';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
 
     public static function form(Form $form): Form

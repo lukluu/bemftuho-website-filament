@@ -12,15 +12,15 @@ https://templatemo.com/tm-584-pod-talk
 
 :root {
     --white-color: #ffffff;
-    --primary-color: #060747;
-    --secondary-color: #0c68d1;
-    --section-bg-color: #f0f8ff;
-    --custom-btn-bg-color: #0c68d1;
-    --custom-btn-bg-hover-color: #060747;
+    --primary-color: #800080;
+    --secondary-color: #012169;
+    --section-bg-color: #d1e1ff;
+    --custom-btn-bg-color: #012169;
+    --custom-btn-bg-hover-color: #800080;
     --dark-color: #000000;
-    --p-color: #717275;
-    --border-color: #060747;
-    --link-hover-color: #0c68d1;
+    --p-color: #111111;
+    --border-color: #800080;
+    --link-hover-color: #012169;
 
     --body-font-family: "Montserrat", sans-serif;
     --title-font-family: "Sono", sans-serif;
@@ -101,7 +101,7 @@ h6 {
 p {
     color: var(--p-color);
     font-size: var(--p-font-size);
-    font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-medium);
 }
 
 ul li {
@@ -204,6 +204,38 @@ main {
 /*---------------------------------------
   CUSTOM BUTTON               
 -----------------------------------------*/
+/* Custom Accordion Container */
+.accordion {
+    overflow: hidden; /* Agar radius bekerja */
+}
+
+/* Custom Accordion Header */
+.accordion-header .accordion-button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    font-weight: bold;
+    box-shadow: none;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+}
+
+/* Icon Accordion (Default Bootstrap) */
+.accordion-button::after {
+    filter: brightness(0) invert(1); /* Ubah icon jadi putih */
+    background-size: 1.2rem;
+}
+
+/* Saat Accordion Terbuka */
+.accordion-button:not(.collapsed) {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+/* Hover Effect */
+.accordion-header .accordion-button:hover {
+    background-color: var(--primary-color);
+}
+
 .custom-btn {
     background: var(--custom-btn-bg-color);
     border: 2px solid transparent;
@@ -276,11 +308,11 @@ main {
 }
 
 .navbar .logo-image {
-    width: 320px;
+    width: 420px;
 }
 
 .logo-image {
-    width: 200px;
+    width: 300px;
     height: auto;
 }
 
@@ -297,12 +329,11 @@ main {
 
 .navbar-nav .nav-link {
     display: inline-block;
-    color: var(--section-bg-color);
-    font-family: var(--title-font-family);
-    font-size: var(--menu-font-size);
-    font-weight: var(--font-weight-medium);
-    text-transform: uppercase;
+    color: #ffffff80;
+    font-family: var(--body-font-family);
+    font-size: 12px;
     font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
     letter-spacing: 0.5px;
     position: relative;
     padding-top: 5px;
@@ -318,9 +349,7 @@ main {
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link:hover {
     transition: all 0.3s;
-    background-color: var(--white-color);
-    border-radius: var(--border-radius-small);
-    color: var(--secondary-color);
+    color: var(--white-color);
 }
 
 .navbar .dropdown-menu {
@@ -475,55 +504,35 @@ main {
   STICKY NAVBAR              
 -----------------------------------------*/
 .navbar.sticky .logo-image {
-    width: 200px;
+    width: 260px;
 }
 .navbar.sticky {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: var(--white-color) !important;
+    background-color: var(--secondary-color) !important;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     animation: fadeInDown 0.5s ease-in-out;
     z-index: 9999;
 }
 
 .navbar.sticky .navbar-brand,
 .navbar.sticky .nav-link {
-    color: var(--secondary-color) !important;
+    color: #ffffffbb !important;
 }
 .navbar.sticky .nav-link {
-    padding: 5px 10px !important;
-    margin: 0 3px !important;
-    border-radius: var(--border-radius-small);
+    padding: 25px 10px !important;
+    margin: 0 !important;
 }
 
 .navbar.sticky .nav-link:hover,
 .navbar.sticky .nav-link.active {
-    background-color: var(--secondary-color) !important;
-    color: var(--white-color) !important;
-}
-
-.navbar.sticky .custom-border-btn {
-    border-color: var(--secondary-color) !important;
     color: var(--secondary-color) !important;
-}
-
-.navbar.sticky .custom-border-btn:hover {
-    background: var(--secondary-color) !important;
-    color: var(--white-color) !important;
-}
-
-.navbar.sticky .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-    background: transparent;
-}
-
-.navbar.sticky .navbar-toggler-icon,
-.navbar.sticky .navbar-toggler-icon::before,
-.navbar.sticky .navbar-toggler-icon::after {
-    background: var(--secondary-color) !important;
+    background-color: var(--white-color) !important;
+    border-radius: 0;
 }
 
 @keyframes fadeInDown {
@@ -585,10 +594,16 @@ main {
 
 .owl-carousel {
     text-align: center;
+    width: 100%;
+    height: 450px;
 }
 
 .owl-carousel-image {
     display: block;
+    width: 100%;
+    height: 325px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .owl-carousel .owl-item .owl-carousel-verified-image {
@@ -621,13 +636,13 @@ main {
 }
 
 .owl-carousel-info {
-    background-color: var(--section-bg-color);
+    background-color: var(--white-color);
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
     position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
-    padding: 30px;
+    padding: 15px;
 }
 
 .badge {
@@ -642,7 +657,8 @@ main {
 .team-thumb .social-share {
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
+    transform: translateY(100%);
 }
 
 .owl-carousel-info-wrap .social-icon,
@@ -697,9 +713,10 @@ main {
     background: var(--secondary-color);
 }
 
-/*---------------------------------------
+/* ---------------------------------------
   CUSTOM BLOCK              
 -----------------------------------------*/
+
 .custom-block {
     border: 2px solid var(--primary-color);
     border-radius: var(--border-radius-medium);
@@ -721,10 +738,16 @@ main {
     padding: 10px 20px;
     padding-bottom: 0;
 }
-
+.topics-section .custom-block-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .custom-block-image-wrap {
     position: relative;
-    display: block;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     height: 100%;
 }
 
@@ -735,8 +758,8 @@ main {
 .custom-block-image {
     border-radius: var(--border-radius-medium);
     display: block;
-    width: 112px;
-    height: 112px;
+    width: 100%;
+    height: 200px;
     object-fit: cover;
 }
 
@@ -756,6 +779,9 @@ main {
     border-radius: var(--border-radius-medium);
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .custom-block-icon-wrap .section-overlay {
@@ -802,16 +828,15 @@ main {
 .custom-block .custom-block-info + div .badge {
     background-color: var(--dark-color);
     color: var(--white-color);
-    border-radius: 50px !important;
     font-size: var(--menu-font-size);
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 40px;
-    height: 40px;
     line-height: 30px;
     margin-top: 5px;
     margin-bottom: 5px;
+    padding: 0 10px;
+    transition: all 0.3s;
 }
 
 .custom-block .custom-block-info + div .badge:hover {
@@ -820,11 +845,20 @@ main {
 
 .custom-block-full {
     background-color: var(--section-bg-color);
+    border-color: var(--primary-color);
     border-color: transparent;
 }
 
 .custom-block-full:hover {
     border-color: var(--primary-color);
+    /* background-color: var(--section-bg-color); */
+    /* border-color: transparent; */
+}
+.trending-podcast-section .custom-block-full:hover .custom-block-info h5 a {
+    color: var(--primary-color) !important;
+}
+.trending-podcast-section .custom-block-full .custom-block-info h5 a {
+    color: var(--secondary-color) !important;
 }
 
 .custom-block-full .custom-block-info {
@@ -833,8 +867,8 @@ main {
 }
 
 .custom-block-full .custom-block-image {
-    width: 100%;
-    height: 210px;
+    /* width: 100%;
+    height: 210px; */
 }
 
 .custom-block-full .social-share {
@@ -889,7 +923,31 @@ main {
 .custom-block-overlay-info {
     padding: 15px 20px 20px 20px;
 }
+/*---------------------------------------
+  VIDEO BLOCK               
+-----------------------------------------*/
+/* Optional: Custom styling untuk mempercantik */
+.ratio-16x9 {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.video-description {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 991.98px) {
+    .ps-lg-4 {
+        padding-left: 0 !important;
+    }
+    .video-description {
+        padding-top: 1.5rem;
+    }
+}
 /*---------------------------------------
   PROIFLE BLOCK               
 -----------------------------------------*/
@@ -919,7 +977,76 @@ main {
 .profile-detail-block p {
     margin-bottom: 0;
 }
+.bg-nav {
+    position: relative;
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--secondary-color),
+        var(--primary-color)
+    );
+    background-size: 200% 200%;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    animation: gradientWave 8s ease infinite;
+}
 
+/* Efek titik-titik animasi */
+.bg-nav::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+            circle at 20% 30%,
+            rgba(255, 255, 255, 0.8) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 255, 255, 0.8) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle at 40% 50%,
+            rgba(255, 255, 255, 0.8) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle at 60% 20%,
+            rgba(255, 255, 255, 0.8) 1px,
+            transparent 1px
+        );
+    background-size: 200px 200px;
+    animation: particlesMove 15s linear infinite;
+    opacity: 0.3;
+}
+
+/* Animasi gradient wave */
+@keyframes gradientWave {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animasi partikel melayang */
+@keyframes particlesMove {
+    0% {
+        background-position: 0 0, 100px 100px, 200px 200px, 300px 300px;
+    }
+    100% {
+        background-position: 300px 300px, 400px 400px, 500px 500px, 600px 600px;
+    }
+}
 /*---------------------------------------
   ABOUT & TEAM SECTION               
 -----------------------------------------*/
@@ -1037,7 +1164,86 @@ main {
 .subscribe-form #submit {
     border-radius: 0 0 10px 10px;
 }
+/*---------------------------------------
+  KELEMBAGAAN  
+-----------------------------------------*/
+/* Custom CSS for Logo Swiper */
+/* Custom CSS for Seamless Logo Marquee */
+.logo-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
 
+.logo-marquee-content {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    animation: scroll 30s linear infinite;
+}
+
+.logo-item {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 100px;
+    margin: 0;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.logo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.1s ease;
+}
+
+.logo-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause animation on hover */
+.logo-marquee:hover .logo-marquee-content {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo-item {
+        width: 150px;
+        padding: 0 15px;
+    }
+    .logo-marquee {
+        margin-bottom: 100px;
+    }
+    .logo-marquee-content {
+        animation: scroll 5s linear infinite;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-item {
+        width: 120px;
+        padding: 0 10px;
+    }
+}
 /*---------------------------------------
   CUSTOM FORM               
 -----------------------------------------*/
@@ -1099,25 +1305,18 @@ main {
   SITE FOOTER              
 -----------------------------------------*/
 .site-footer {
-    background-image: url("../images/templatemo-wave-footer.jpg"),
-        linear-gradient(#ffffff, #348cd2);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    margin-top: -80px;
-    padding-top: 100px;
-    padding-bottom: 150px;
+    background: var(--secondary-color);
+    padding: 50px 0 0 0;
+    color: var(--white-color);
 }
 
-.site-footer > .container {
-    position: relative;
-    top: 50px;
-    padding-top: 100px;
+.site-footer-title {
+    color: var(--white-color);
 }
 
-.site-footer-title,
 .site-footer p {
     color: var(--white-color);
+    margin-bottom: 0.5rem;
 }
 
 .site-footer p strong {
@@ -1128,35 +1327,29 @@ main {
     color: var(--white-color);
     border-bottom: 1px solid;
     padding-bottom: 3px;
+    text-decoration: none;
 }
 
 .site-footer p a:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
-
-.site-footer-thumb a img {
-    display: block;
-    width: 120px;
-    min-width: 120px;
-    height: auto;
-}
-
-.site-footer-links {
-    margin-bottom: 0;
-    padding-left: 0;
-}
-
-.site-footer-link-item {
-    display: inline-block;
-    list-style: none;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.site-footer-link {
+.site-footer .social-icon-link {
+    background: none !important;
+    border-radius: 0;
     color: var(--white-color);
     font-size: var(--p-font-size);
-    line-height: inherit;
+    display: flex;
+    padding-right: 25px;
+    text-align: center;
+    width: 50px;
+    height: 0;
+    line-height: 40px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.site-footer .social-icon-link:hover {
+    background-color: none !important;
+    color: var(--primary-color);
 }
 
 /*---------------------------------------
@@ -1203,9 +1396,6 @@ main {
 }
 
 @media screen and (min-width: 1600px) {
-    .site-footer {
-        padding-top: 250px;
-    }
 }
 
 @media screen and (max-width: 1240px) {
@@ -1216,15 +1406,73 @@ main {
 }
 
 @media screen and (max-width: 991px) {
-    .navbar-nav .nav-link {
-        color: var(--secondary-color);
+    .navbar-nav .nav-link,
+    .navbar-nav.sticky .nav-link {
+        width: 100%;
+        border-radius: none !important;
     }
-    .navbar-nav .nav-link.active,
-    .navbar-nav .nav-link:hover {
-        color: var(--white-color);
-        background-color: var(--primary-color);
+    .bg-nav {
+        height: 150px;
+    }
+    .navbar-nav {
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: var(--secondary-color);
+        border: 0.5px solid var(--white-color);
         border-radius: var(--border-radius-small);
     }
+    .navbar.sticky .navbar-nav .nav-link {
+        padding: 15px !important;
+        margin: 0 !important;
+        color: var(--white-color);
+    }
+
+    .navbar.sticky .navbar-nav {
+        margin-top: 30px !important;
+        background-color: var(--secondary-color) !important;
+        border: none;
+        border-radius: 0;
+    }
+    .navbar-nav .nav-link {
+        padding: 15px !important;
+        margin: 0 !important;
+        color: var(--section-bg-color);
+    }
+    .navbar .logo-image {
+        width: 320px;
+    }
+    .navbar-nav.sticky .logo-image {
+        width: 320px;
+    }
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav .nav-link:hover {
+        color: var(--secondary-color);
+        width: 100%;
+        background-color: var(--white-color) !important;
+        border-radius: 0;
+    }
+    .navbar-nav.sticky .nav-link.active,
+    .navbar-nav.sticky .nav-link:hover {
+        color: var(--white-color);
+        width: 100%;
+        background-color: var(--secondary-color) !important;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: relative;
+        left: 10px;
+        opacity: 1;
+        pointer-events: auto;
+        max-width: 155px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+        padding-bottom: 20px;
+    }
+
     h1 {
         font-size: 48px;
     }
@@ -1251,36 +1499,13 @@ main {
 
     .hero-section {
         background-size: 160% 66%;
+        background-color: var(--secondary-color);
+
         /* T o o p l a t e . c o m   C u s t o m i z e d */
     }
-
     .section-padding {
         padding-top: 50px;
         padding-bottom: 50px;
-    }
-
-    .navbar-nav {
-        background-color: var(--white-color);
-        border-radius: var(--border-radius-medium);
-        padding: 30px;
-    }
-
-    .navbar-nav .nav-link {
-        padding: 5px 0;
-    }
-
-    .navbar-nav .dropdown-menu {
-        position: relative;
-        left: 10px;
-        opacity: 1;
-        pointer-events: auto;
-        max-width: 155px;
-        margin-top: 10px;
-        margin-bottom: 15px;
-    }
-
-    .navbar-expand-lg .navbar-nav {
-        padding-bottom: 20px;
     }
 
     .nav-tabs .nav-link:first-child {
@@ -1294,12 +1519,6 @@ main {
 
     .copyright-text {
         text-align: center;
-    }
-
-    .site-footer {
-        margin-top: -200px;
-        padding-top: 200px;
-        padding-bottom: 100px;
     }
 }
 

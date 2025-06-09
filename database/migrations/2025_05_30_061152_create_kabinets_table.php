@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('periode');
             $table->string('tagline')->nullable();
             $table->string('logo')->nullable();
+            $table->string('color-primary')->nullable()->default('#002396b2');
+            $table->string('color-secondary')->nullable()->default('#5c186d');
+            $table->string('color-tertiary')->nullable()->default('#c3b6e7e3');
             $table->timestamps();
         });
     }

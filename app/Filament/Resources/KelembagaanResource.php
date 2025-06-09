@@ -21,12 +21,9 @@ class KelembagaanResource extends Resource
     protected static ?string $model = Kelembagaan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-
-    protected static ?string $navigationGroup = 'Kelembagaan';
-
     protected static ?string $navigationLabel = 'Kelembagaan';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {

@@ -94,6 +94,11 @@ class MahasiswaResource extends Resource
                         ->required(),
                     SpatieMediaLibraryFileUpload::make('mahasiswa')
                         ->collection('mahasiswa')
+                        ->imageEditor()
+                        ->imageResizeMode('cover')
+                        ->imageCropAspectRatio('3:4') // Force aspect ratio
+                        ->imageResizeTargetWidth('600') // Lebar target (3x)
+                        ->imageResizeTargetHeight('800') // Tinggi target (4x)
                         ->image(),
                 ])
                     ->columns(2),
@@ -105,16 +110,6 @@ class MahasiswaResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('No')->state(
-                    static function (HasTable $livewire, stdClass $rowLoop): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->getTableRecordsPerPage() * (
-                                $livewire->getTablePage() - 1
-                            ))
-                        );
-                    }
-                ),
                 Tables\Columns\TextColumn::make('nama')->searchable(),
                 Tables\Columns\TextColumn::make('jurusan')->searchable(),
                 Tables\Columns\TextColumn::make('angkatan')->searchable(),

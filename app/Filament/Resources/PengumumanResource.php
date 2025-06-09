@@ -22,10 +22,8 @@ class PengumumanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
 
-    protected static ?string $navigationGroup = 'Pengumuman';
-
     protected static ?string $navigationLabel = 'Pengumuman';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 5;
 
 
     public static function form(Form $form): Form

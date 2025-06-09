@@ -4,14 +4,17 @@ namespace Database\Seeders;
 
 use App\Models\Tag;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Jabatan;
 use App\Models\Kabinet;
 use App\Models\Category;
+use App\Models\Pengumuman;
 use App\Models\Kelembagaan;
 use App\Models\Marchandise;
-use App\Models\Pengumuman;
+use Illuminate\Support\Str;
+use App\Models\LinkAspirasi;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,10 +26,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        \App\Models\Mahasiswa::factory()->count(15)->create();
+        \App\Models\Mahasiswa::factory()->count(5)->create();
         Pengumuman::factory()->count(5)->create();
         Marchandise::factory()->count(5)->create();
         Kelembagaan::factory()->count(5)->create();
+        LinkAspirasi::create([
+            'link' => 'https://example.com/aspirasi/' . Str::random(8),
+            'hero' => 'default/no_image.png',
+            'deskripsi' => fake()->sentence(10),
+        ]);
         User::create([
             'name' => 'Admin',
             'username' => 'lukman',
@@ -35,19 +43,34 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         Category::create([
-            'name' => 'Pengumuman',
+            'name' => 'Berita Kampus',
+            'image' => 'categories/berita-kampus.jpg',
         ]);
         Category::create([
-            'name' => 'Kegiatan',
+            'name' => 'Kegiatan BEM',
+            'image' => 'categories/kegiatan-bem.jpg',
+        ]);
+        Category::create([
+            'name' => 'Opini',
+            'image' => 'categories/opini.jpg',
+        ]);
+        Category::create([
+            'name' => 'Keteknikan',
+            'image' => 'categories/keteknikan.jpg',
+        ]);
+        Category::create([
+            'name' => 'Kemahasiswaan',
+            'image' => 'categories/kemahasiswaan.jpg',
         ]);
         Tag::create([
             'name' => 'seminar',
+
         ]);
         Tag::create([
-            'name' => 'info',
+            'name' => 'prestasi',
         ]);
         Jabatan::create([
-            'nama_jabatan' => 'Ketua',
+            'nama_jabatan' => 'Ketua Umum',
         ]);
         Jabatan::create([
             'nama_jabatan' => 'Wakil Ketua',
@@ -55,10 +78,13 @@ class DatabaseSeeder extends Seeder
         Jabatan::create([
             'nama_jabatan' => 'Sekretaris Jenderal',
         ]);
+        Jabatan::create([
+            'nama_jabatan' => 'Bendahara Umum',
+        ]);
         Kabinet::create([
-            'nama_kabinet' => 'Kabinet 1',
+            'nama_kabinet' => 'Sinergitas',
             'periode' => '2023/2024',
-            'logo' => 'default/no_image.png',
+            'logo' => 'kabinet/logo.png',
             'visi' => 'Visi Kabinet 1',
             'misi' => 'Misi Kabinet 1',
             'tagline' => 'Tagline Kabinet 1',
@@ -75,5 +101,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EventSeeder::class,
         ]);
+        Post::factory()->count(15)->create();
     }
 }

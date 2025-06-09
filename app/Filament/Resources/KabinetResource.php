@@ -27,11 +27,14 @@ use App\Filament\Resources\KabinetResource\RelationManagers;
 use App\Filament\Resources\KabinetResource\RelationManagers\JabatanRelationManager;
 use App\Filament\Resources\KabinetResource\RelationManagers\PengurusIntiRelationManager;
 use App\Filament\Resources\KabinetResource\RelationManagers\MahasiswaKabinetJabatanRelationManager;
+use Faker\Core\Color;
+use Filament\Forms\Components\ColorPicker;
 
 class KabinetResource extends Resource
 {
     protected static ?string $model = Kabinet::class;
-    protected static ?int $navigationSort = 2;
+
+    protected static ?int $navigationSort = 1;
     public static function getGloballySearchableAttributes(): array
     {
         return ['nama_kabinet', 'periode'];
@@ -89,6 +92,18 @@ class KabinetResource extends Resource
                             ->directory('kabinet') // Folder penyimpanan (di `storage/app/public/articles`)
                             ->maxSize(2048) // Ukuran maksimal dalam KB (2MB)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
+                        ColorPicker::make('color_primary')
+                            ->label('Warna Utama')
+                            ->rgba() // Ini akan memungkinkan transparansi
+                            ->required(),
+                        ColorPicker::make('color-secondary')
+                            ->rgba()
+                            ->label('Warna Sekunder')
+                            ->required(),
+                        ColorPicker::make('color-tertiary')
+                            ->rgba()
+                            ->label('Warna bg card')
+                            ->required(),
                     ])
 
             ]);
