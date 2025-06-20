@@ -4,21 +4,26 @@ namespace App\Filament\Resources;
 
 use Dom\Text;
 use stdClass;
+use PhpOption\None;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\Mahasiswa;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
 use Filament\Infolists\Components\Grid;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 use App\Filament\Resources\MahasiswaResource\Pages;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
@@ -45,7 +50,19 @@ class MahasiswaResource extends Resource
     }
     protected static ?string $navigationGroup = 'Kelola Pengurus';
     protected static ?int $navigationSort = 1;
+    public static function getNavigationBadge(): ?string
+    {
+        /** @var \App\Models\User $user */
+        $user = Filament::auth()->user();
 
+        // Jika admin, tampilkan semua
+        if ($user->isAdmin()) {
+            return static::getModel()::count();
+        }
+
+        // Jika bukan admin, tampilkan count berdasarkan user
+        return static::getModel()::where('user_id', $user->id)->count();
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -92,14 +109,29 @@ class MahasiswaResource extends Resource
                             'Perempuan' => 'Perempuan',
                         ])
                         ->required(),
-                    SpatieMediaLibraryFileUpload::make('mahasiswa')
-                        ->collection('mahasiswa')
+                    Repeater::make('sosmedMhs')
+                        ->relationship()
+                        ->label('Sosial Media')
+                        ->schema([
+                            Select::make('sosmed_id')
+                                ->relationship('sosmed', 'name')
+                                ->label('Nama Sosmed')
+                                ->required(),
+                            TextInput::make('link')
+                                ->label('username')
+                                ->placeholder('username')
+                                ->required()
+                                ->maxLength(255),
+                        ]),
+                    FileUpload::make('foto_mahasiswa')
+                        ->image()
+                        ->label('Foto Mahasiswa')
                         ->imageEditor()
-                        ->imageResizeMode('cover')
-                        ->imageCropAspectRatio('3:4') // Force aspect ratio
-                        ->imageResizeTargetWidth('600') // Lebar target (3x)
-                        ->imageResizeTargetHeight('800') // Tinggi target (4x)
-                        ->image(),
+                        ->imageCropAspectRatio('3:4')  // Set rasio crop ke 3:4
+                        ->imageResizeTargetWidth(300)  // Opsional: set lebar target
+                        ->imageResizeTargetHeight(400) // Opsional: set tinggi target
+                        ->directory('mahasiswa')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                 ])
                     ->columns(2),
             ]);
@@ -157,10 +189,15 @@ class MahasiswaResource extends Resource
                         'lg' => 2,
                     ])
                     ->schema([
-                        SpatieMediaLibraryImageEntry::make('mahasiswa')
+                        ImageEntry::make('foto_mahasiswa')
                             ->defaultImageUrl(asset('storage/default/default.jpg'))
                             ->label('')
-                            ->collection('mahasiswa')
+                            ->openUrlInNewTab()
+                            ->state(function ($record) {
+                                // Pastikan $record ada dan field mahasiswa tidak null
+                                return $record && $record->mahasiswa ? asset('storage/' . $record->mahasiswa) : null;
+                            })
+                            ->extraImgAttributes(['loading' => 'lazy'])
                             ->columnSpan([
                                 'sm' => 1,
                                 'md' => 1,

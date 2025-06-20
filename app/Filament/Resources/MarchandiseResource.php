@@ -53,14 +53,20 @@ class MarchandiseResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('Rp'),
                 Forms\Components\TextInput::make('stock')
                     ->required()
                     ->numeric()
                     ->default(0),
+                Forms\Components\TextInput::make('phone_number')
+                    ->label('Phone Number')
+                    ->numeric(),
                 Forms\Components\FileUpload::make('image_path')
                     ->image()
                     ->imageEditor()
+                    ->imageCropAspectRatio('4:3')
+                    ->imageResizeTargetWidth(1024)
+                    ->imageResizeTargetHeight(768)
                     ->getUploadedFileNameForStorageUsing(
                         fn(TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
                             ->prepend('marchandise-'),
@@ -81,11 +87,14 @@ class MarchandiseResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money('idr')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('phone_number')
+                    ->sortable(),
+
                 Tables\Columns\ImageColumn::make('image_path'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),

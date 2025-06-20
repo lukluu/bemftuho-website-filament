@@ -50,6 +50,7 @@ class EventSeeder extends Seeder
             'is_free' => true,
             'price' => null,
             'registration_link' => 'https://bit.ly/webinar-bemft2023',
+            'user_id' => 1,
             'kabinet_id' => 1,
             'category_event_id' => 1
         ]);
@@ -67,6 +68,7 @@ class EventSeeder extends Seeder
             'is_free' => false,
             'price' => 25000,
             'registration_link' => 'https://bit.ly/codingcomp-bemft',
+            'user_id' => 1,
             'kabinet_id' => 2,
             'category_event_id' => 1
         ]);
@@ -84,6 +86,7 @@ class EventSeeder extends Seeder
             'is_free' => false,
             'price' => 50000,
             'registration_link' => 'https://bit.ly/uiux-workshop',
+            'user_id' => 1,
             'kabinet_id' => 1,
             'category_event_id' => 2
         ]);

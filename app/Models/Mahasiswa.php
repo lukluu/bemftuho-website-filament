@@ -19,10 +19,7 @@ class Mahasiswa extends model implements HasMedia
     protected $table = 'mahasiswas';
     protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('mahasiswa')->singleFile()->useDisk('mahasiswa');
-    }
+
     protected $with = ['kabinetMahasiswaJabatan.jabatan', 'kabinetMahasiswaJabatan.kabinet'];
     public function kabinetMahasiswaJabatan()
     {
@@ -35,5 +32,10 @@ class Mahasiswa extends model implements HasMedia
         static::saving(function ($mahasiswa) {
             $mahasiswa->nama = Str::title($mahasiswa->nama);
         });
+    }
+
+    public function sosmedMhs()
+    {
+        return $this->hasMany(SosmedMahasiswa::class);
     }
 }

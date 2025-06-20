@@ -9,6 +9,7 @@ use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,7 +28,19 @@ class JabatanResource extends Resource
     {
         return ['nama_jabatan'];
     }
+    public static function getNavigationBadge(): ?string
+    {
+        /** @var \App\Models\User $user */
+        $user = Filament::auth()->user();
 
+        // Jika admin, tampilkan semua
+        if ($user->isAdmin()) {
+            return static::getModel()::count();
+        }
+
+        // Jika bukan admin, tampilkan count berdasarkan user
+        return static::getModel()::where('user_id', $user->id)->count();
+    }
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [

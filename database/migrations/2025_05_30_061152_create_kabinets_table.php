@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('kabinets', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kabinet');
+            $table->string('slug')->unique();
             $table->string('visi');
             $table->string('misi');
             $table->string('periode');
             $table->string('tagline')->nullable();
             $table->string('logo')->nullable();
-            $table->string('color-primary')->nullable()->default('#002396b2');
-            $table->string('color-secondary')->nullable()->default('#5c186d');
-            $table->string('color-tertiary')->nullable()->default('#c3b6e7e3');
+            $table->string('struktur_organisasi')->nullable();
+            $table->string('color_primary')->nullable()->default('#800080');
+            $table->string('color_secondary')->nullable()->default('#012169');
             $table->timestamps();
         });
     }

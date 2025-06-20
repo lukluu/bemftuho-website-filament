@@ -26,6 +26,7 @@ class MarchandiseFactory extends Factory
             'price' => $this->faker->randomFloat(2, 10000, 200000), // harga antara 10rb - 200rb
             'stock' => $this->faker->numberBetween(5, 100),
             'image_path' => 'default/no_image.png',
+            'phone_number' => $this->faker->phoneNumber(),
             'is_active' => $this->faker->boolean(85), // 85% merchandise aktif
             'created_at' => now(),
             'updated_at' => now(),

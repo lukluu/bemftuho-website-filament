@@ -27,6 +27,7 @@ use App\Filament\Resources\KabinetResource\RelationManagers;
 use App\Filament\Resources\KabinetResource\RelationManagers\JabatanRelationManager;
 use App\Filament\Resources\KabinetResource\RelationManagers\PengurusIntiRelationManager;
 use App\Filament\Resources\KabinetResource\RelationManagers\MahasiswaKabinetJabatanRelationManager;
+use Dom\Text;
 use Faker\Core\Color;
 use Filament\Forms\Components\ColorPicker;
 
@@ -73,6 +74,7 @@ class KabinetResource extends Resource
                             ->columnSpanFull(),
                         Select::make('periode')
                             ->label('Pilih Tahun Kepengurusan')
+                            ->columnSpanFull()
                             ->options(function () {
                                 $currentYear = now()->year;
                                 $years = [];
@@ -91,19 +93,14 @@ class KabinetResource extends Resource
                             ->image()
                             ->directory('kabinet') // Folder penyimpanan (di `storage/app/public/articles`)
                             ->maxSize(2048) // Ukuran maksimal dalam KB (2MB)
+                            ->columnSpanFull()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
-                        ColorPicker::make('color_primary')
-                            ->label('Warna Utama')
-                            ->rgba() // Ini akan memungkinkan transparansi
-                            ->required(),
-                        ColorPicker::make('color-secondary')
-                            ->rgba()
-                            ->label('Warna Sekunder')
-                            ->required(),
-                        ColorPicker::make('color-tertiary')
-                            ->rgba()
-                            ->label('Warna bg card')
-                            ->required(),
+                        FileUpload::make('struktur_organisasi')
+                            ->image()
+                            ->directory('kabinet')
+                            ->columnSpanFull()
+                            ->maxSize(2048) // Ukuran maksimal dalam KB (2MB)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                     ])
 
             ]);
@@ -130,6 +127,12 @@ class KabinetResource extends Resource
                     ->extraImgAttributes(['loading' => 'lazy'])
                     ->size(60)
                     ->grow(false),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //

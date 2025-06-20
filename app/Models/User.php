@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
+use App\Models\Role;
+// use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -43,5 +48,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    public function pengumuman()
+    {
+        return $this->hasMany(Pengumuman::class);
+    }
+
+    public function event()
+    {
+        return $this->hasMany(Event::class);
+    }
+    public function isAdmin()
+    {
+        return $this->roles()->where('name', 'super_admin')->exists()
+            || $this->email === 'l@l.com';
+        // return $this->roles()->where('name', 'super_admin')->exists();
     }
 }

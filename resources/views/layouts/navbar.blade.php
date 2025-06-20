@@ -25,21 +25,32 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Route::is('welcome') ? ' active' : '' }}" aria-current="page" href="{{ url('/') }}">Beranda</a>
                         </li>
-
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::is('about') ? ' active' : '' }}" href="{{ url('/about') }}">Profile</a>
-                        </li>
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+                            <a class="nav-link dropdown-toggle {{ Route::is('profile') || Route::is('kabinet.show') || Route::is('struktur-organisasi') ? ' active' : '' }}" href="#" id="navbarLightDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Tentang</a>
 
                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                                <li><a class="dropdown-item" href="listing-page.html">Listing Page</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
 
-                                <li><a class="dropdown-item" href="detail-page.html">Detail Page</a></li>
+                                <li><a class="dropdown-item" href="{{ route('struktur-organisasi') }}">Struktur</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('pengumuman') || Route::is('pengumuman.show') ? ' active' : '' }}" href="{{ url('/pengumuman') }}">Pengumuman</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('event') || Route::is('event.show') ? ' active' : '' }}" href="{{ url('/event') }}">Event</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('berita') || Route::is('berita.show') || Route::is('categoryPost.show') ? ' active' : '' }}" href="{{ url('/berita') }}">Berita</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('aspirasi') ? ' active' : '' }}" href="{{ url('/aspirasi') }}">Aspirasi</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ Route::is('marchandise') || Route::is('marchandise.show') ? ' active' : '' }}" href="{{ url('/marchandise') }}">Marchendise</a>
+                        </li>
+
                     </ul>
 
                     <!-- <div class="ms-4">

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
             $table->string('image_path')->nullable();
+            $table->string('phone_number')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -11,8 +11,10 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use App\Models\KabinetMahasiswaJabatan;
+use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -96,9 +98,29 @@ class KabinetMahasiswaJabatanRelationManager extends RelationManager
                                     'Perempuan' => 'Perempuan',
                                 ])
                                 ->required(),
-                            SpatieMediaLibraryFileUpload::make('mahasiswa')
-                                ->collection('mahasiswa')
-                                ->image(),
+                            Repeater::make('sosmedMhs')
+                                ->relationship()
+                                ->label('Sosial Media')
+                                ->schema([
+                                    Select::make('sosmed_id')
+                                        ->relationship('sosmed', 'name')
+                                        ->label('Nama Sosmed')
+                                        ->required(),
+                                    TextInput::make('link')
+                                        ->label('username')
+                                        ->placeholder('username')
+                                        ->required()
+                                        ->maxLength(255),
+                                ]),
+                            FileUpload::make('foto_mahasiswa')
+                                ->image()
+                                ->label('Foto Mahasiswa')
+                                ->imageEditor()
+                                ->imageCropAspectRatio('3:4')  // Set rasio crop ke 3:4
+                                ->imageResizeTargetWidth(300)  // Opsional: set lebar target
+                                ->imageResizeTargetHeight(400) // Opsional: set tinggi target
+                                ->directory('mahasiswa')
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ])
                             ->columns(2),
                     ]),

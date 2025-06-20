@@ -22,4 +22,10 @@ class Marchandise extends Model
             $marchandise->slug = Str::slug($marchandise->name);
         });
     }
+
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

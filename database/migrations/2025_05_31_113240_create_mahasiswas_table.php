@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('jurusan');
             $table->string('angkatan');
             $table->string('gander');
+            $table->string('foto_mahasiswa')->nullable();
             // $table->softDeletes();
             $table->timestamps();
         });

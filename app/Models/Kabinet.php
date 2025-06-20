@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Kabinet extends Model
@@ -24,5 +25,17 @@ class Kabinet extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($kabinet) {
+            $kabinet->slug = Str::slug($kabinet->nama_kabinet);
+        });
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

@@ -9,6 +9,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\StatsOverview;
 use Filament\Navigation\NavigationGroup;
+use App\Filament\Widgets\VisitStatsChart;
+use App\Filament\Widgets\VisitStatsTable;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Resources\NotifikasiResource;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -32,6 +34,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->registration()
+            ->emailVerification()
+            ->passwordReset()
+            ->profile()
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
@@ -41,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
             ->sidebarFullyCollapsibleOnDesktop()
-            ->font('Open Sans')
+            ->font('poppins')
             ->brandName('BEM TEKNIK UHO')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -54,6 +60,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 StatsOverview::class,
+                VisitStatsChart::class,
+                // VisitStatsTable::class,
+
             ])
 
             ->middleware([
@@ -73,6 +82,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Pelindung'),
+
+                NavigationGroup::make()
                     ->icon('heroicon-o-users')
                     ->label('Kelola Pengurus'),
                 NavigationGroup::make()
@@ -81,6 +93,9 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->icon('heroicon-o-newspaper')
                     ->label('Post Management'),
+            ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ]);
     }
 }

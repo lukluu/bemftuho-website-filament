@@ -10,30 +10,33 @@ use App\Models\Category;
 use App\Models\Pengumuman;
 use App\Models\Kelembagaan;
 use App\Models\Marchandise;
+use Filament\Forms\Get;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        $kabinet = Kabinet::with('kabinetMahasiswaJabatan.mahasiswa', 'kabinetMahasiswaJabatan.jabatan')->latest()->first();
-
+        $kabinet = Kabinet::with('kabinetMahasiswaJabatan.mahasiswa.sosmedMhs.sosmed', 'kabinetMahasiswaJabatan.jabatan')->latest()->first();
         // dd($kabinet);
-        $pengumuman = Pengumuman::all();
+        $pengumuman = Pengumuman::latest()->get();
         $event = Event::take(3)->get();
         $marchandise = Marchandise::latest()->first();
         $posts = Post::with('tags', 'category')->latest()->first();
-        $category = Category::take(4)->get();
+
+        $categories = Category::with('posts')->latest()->get();
+
         $kelembagaan = Kelembagaan::all();
         return view('welcome', [
 
             'kabinet' => $kabinet,
-            'pengumumans' => $pengumuman,
+            'pengumumanList' => $pengumuman,
             'events' => $event,
             'marchandises' => $marchandise,
             'posts' => $posts,
+            'categories' => $categories,
             'kelembagaans' => $kelembagaan,
-            'categories' => $category
         ]);
     }
 }

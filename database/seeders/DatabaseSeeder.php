@@ -25,7 +25,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::firstOrCreate([
+            'name' => 'Admin',
+            'email' => 'l@l.com',
+            'password' => Hash::make('password'), // Ganti dengan password yang aman
+            'email_verified_at' => now(),
+        ]);
         \App\Models\Mahasiswa::factory()->count(5)->create();
         Pengumuman::factory()->count(5)->create();
         Marchandise::factory()->count(5)->create();
@@ -35,28 +40,14 @@ class DatabaseSeeder extends Seeder
             'hero' => 'default/no_image.png',
             'deskripsi' => fake()->sentence(10),
         ]);
-        User::create([
-            'name' => 'Admin',
-            'username' => 'lukman',
-            'email' => 'l@l.com',
-            'password' => Hash::make('password'), // Ganti dengan password yang aman
-            'email_verified_at' => now(),
-        ]);
+
         Category::create([
             'name' => 'Berita Kampus',
             'image' => 'categories/berita-kampus.jpg',
         ]);
         Category::create([
-            'name' => 'Kegiatan BEM',
-            'image' => 'categories/kegiatan-bem.jpg',
-        ]);
-        Category::create([
             'name' => 'Opini',
             'image' => 'categories/opini.jpg',
-        ]);
-        Category::create([
-            'name' => 'Keteknikan',
-            'image' => 'categories/keteknikan.jpg',
         ]);
         Category::create([
             'name' => 'Kemahasiswaan',
@@ -100,7 +91,14 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
             EventSeeder::class,
+            SosmedSeeder::class
         ]);
-        Post::factory()->count(15)->create();
+
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            Post::factory()
+                ->count(3)
+                ->create(['category_id' => $category->id]);
+        }
     }
 }

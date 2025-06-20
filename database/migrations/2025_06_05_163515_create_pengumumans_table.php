@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('pengumumans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title'); // judul pengumuman
             $table->string('slug')->unique();
             $table->text('content'); // isi pengumuman
             $table->string('image')->nullable();
-            $table->boolean('is_active')->default(true); // status aktif/tidak
+            $table->boolean('is_active')->default(false); // status aktif/tidak
             $table->timestamps();
         });
     }

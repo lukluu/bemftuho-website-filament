@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Closure;
 use Dom\Text;
 use Filament\Forms;
+use Faker\Core\File;
 use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -12,20 +13,20 @@ use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Filament\Resources\CategoryResource\RelationManagers\PostsRelationManager;
-use Faker\Core\File;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\ImageColumn;
 
 class CategoryResource extends Resource
 {
@@ -55,12 +56,26 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                /** @var \App\Models\User $user */
+                $user = Filament::auth()->user();
+
+                // eager load dengan filter post milik user yang login
+                $query->withCount([
+                    'posts as posts_count' => function ($q) use ($user) {
+                        if (! $user->isAdmin()) {
+                            $q->where('user_id', $user->id);
+                        }
+                    },
+                ]);
+            })
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('slug')->sortable()->searchable(),
                 TextColumn::make('posts_count')
-                    ->counts('posts') // Pastikan ini ada
-                    ->label('Jumlah Post'),
+                    ->label('Jumlah Post')
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => $state ?? 0),
                 ImageColumn::make('image')->circular()->label('Image'),
             ])
 

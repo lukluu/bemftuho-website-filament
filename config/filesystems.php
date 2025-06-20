@@ -42,21 +42,6 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-        'posts' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/posts'), // Folder utama
-            'url' => env('APP_URL') . '/storage/posts',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        'mahasiswa' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/mahasiswa'),
-            'url' => env('APP_URL') . '/storage/mahasiswa',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
